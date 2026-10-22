@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { PUZZLES, buildEntries, dateKey, getPuzzleForDate } from './puzzles.js';
+import { PUZZLES, LEGACY_PUZZLES, PACK_START_DATE, buildEntries, dateKey, getPuzzleForDate } from './puzzles.js';
 
 test('the starter pack contains seven different original grids', () => {
   assert.equal(PUZZLES.length, 7);
@@ -8,7 +8,7 @@ test('the starter pack contains seven different original grids', () => {
   assert.equal(new Set(PUZZLES.map((puzzle) => puzzle.grid.join(''))).size, PUZZLES.length);
 });
 
-for (const puzzle of PUZZLES) {
+for (const puzzle of [...new Set([...PUZZLES, ...LEGACY_PUZZLES])]) {
   test(`${puzzle.title}: complete cluing, crossings, connected grid, and no short runs`, () => {
     assert.equal(puzzle.grid.length, 5);
     assert.ok(puzzle.grid.every((row) => /^[A-Z#]{5}$/.test(row)));
@@ -80,9 +80,27 @@ test('daily rotation is stable, repeats weekly, and handles dates before its anc
   assert.equal(getPuzzleForDate('2026-10-21'), PUZZLES[0]);
   assert.equal(getPuzzleForDate('2026-10-22'), PUZZLES[1]);
   assert.equal(getPuzzleForDate('2026-10-28'), PUZZLES[0]);
-  assert.equal(getPuzzleForDate('2026-10-20'), PUZZLES[6]);
+  assert.equal(getPuzzleForDate('2026-10-20'), LEGACY_PUZZLES[6]);
   const week = Array.from({ length: 7 }, (_, day) => getPuzzleForDate(`2026-10-${21 + day}`).id);
   assert.equal(new Set(week).size, 7);
-  for (const date of ['2026-03-08', '2026-11-01', '2028-02-29']) assert.ok(PUZZLES.includes(getPuzzleForDate(date)));
+  for (const date of ['2026-03-08', '2026-11-01', '2028-02-29']) assert.ok([...PUZZLES, ...LEGACY_PUZZLES].includes(getPuzzleForDate(date)));
   for (const date of ['2026-02-30', '2026-13-01', '2026-1-1', 'not-a-date', '2026-10-21T00:00:00Z']) assert.throws(() => getPuzzleForDate(date), RangeError);
+});
+
+
+test('the denser pack preserves historical dates and starts only at its release date', () => {
+  assert.equal(PACK_START_DATE, '2026-10-22');
+  assert.equal(getPuzzleForDate('2026-10-18').id, 'fresh-sweep');
+  assert.equal(getPuzzleForDate('2026-10-19').id, 'class-act');
+  assert.equal(getPuzzleForDate('2026-10-20').id, 'bright-spark');
+  assert.equal(getPuzzleForDate('2026-10-25').id, 'house-rules');
+  assert.equal(getPuzzleForDate('2026-10-26').id, 'mixed-signals');
+  assert.equal(getPuzzleForDate('2026-10-27').id, 'second-wind');
+  for (const puzzle of PUZZLES) {
+    assert.equal(puzzle.grid.join('').replaceAll('#', '').length, 21);
+    const entries = Object.values(buildEntries(puzzle)).flat();
+    assert.equal(entries.length, 10);
+    assert.ok(entries.filter(entry => entry.answer.length === 5).length >= 4);
+    if (PUZZLES.indexOf(puzzle) >= 4) assert.equal(entries.filter(entry => entry.answer.length === 5).length, 6);
+  }
 });

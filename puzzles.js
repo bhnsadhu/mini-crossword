@@ -1,160 +1,223 @@
 /** Original puzzle pack. The seven puzzles rotate once per local calendar day. */
-export const PUZZLES = [
+export const LEGACY_PUZZLES = [
   {
     id: 'small-change',
     title: 'Small Change',
-    difficulty: 'Easy',
     grid: ['#BAD#', 'MONEY', 'EAGLE', 'TREAT', '#DRY#'],
     clues: {
       across: {
-        1: 'Opposite of good',
-        4: 'What a piggy bank holds',
-        6: 'Bird pictured on the U.S. Great Seal',
-        7: 'A little reward, perhaps something sweet',
-        8: 'Ready to fold, as laundry',
+        1: 'Word before faith or blood',
+        4: 'What a successful Kickstarter raises',
+        6: 'Two strokes better than par',
+        7: 'Pick up the check for',
+        8: 'Like humor delivered with a straight face',
       },
       down: {
-        1: 'Surface for a game of chess',
-        2: 'Feeling that might make you see red',
-        3: 'Make something happen later',
-        4: 'Was introduced to',
-        5: 'Still to come, in “not ___”',
+        1: 'Group that can fire a CEO',
+        2: 'What a short fuse can lead to',
+        3: 'Put off',
+        4: 'Fulfilled, as a quota',
+        5: 'Even so',
       },
     },
   },
   {
     id: 'take-the-floor',
     title: 'Take the Floor',
-    difficulty: 'Medium',
     grid: ['#RAM#', 'TIRED', 'EVERY', 'DANCE', '#LAY#'],
     clues: {
       across: {
-        1: 'A male sheep',
-        4: 'Ready for a nap',
-        6: '___ single one',
-        7: 'Move to the music',
-        8: 'Put down, as a blanket',
+        1: 'Computer memory that clears when power is lost: Abbr.',
+        4: 'Like a joke you have heard one too many times',
+        6: 'Word shared by “___ so often” and “___ now and then”',
+        7: 'Something a wallflower might sit out',
+        8: 'Produce, as an egg',
       },
       down: {
-        1: 'Competitor you really want to beat',
-        2: 'Venue for a basketball game',
-        3: 'Compassion shown to someone you could punish',
-        4: 'Talk series with the slogan “ideas worth spreading”',
-        5: 'Change the color of, as fabric',
+        1: 'Someone you would hate to finish second to',
+        2: 'Place with seats surrounding a playing floor',
+        3: 'What a defeated opponent might beg for',
+        4: 'Name attached to talks worth spreading',
+        5: 'It covers gray areas at a salon?',
       },
     },
   },
   {
     id: 'good-vibes',
     title: 'Good Vibes',
-    difficulty: 'Medium',
     grid: ['TAB##', 'OCEAN', 'SMILE', 'SENSE', '##GOD'],
     clues: {
       across: {
-        1: 'One of many open in a busy web browser',
-        4: 'The Pacific, for one',
-        7: 'A grin’s quieter cousin',
-        8: 'Smell or touch, for example',
-        9: 'Zeus, for one',
+        1: 'Something you might run up or leave open',
+        4: 'Where trenches can be miles deep',
+        7: 'It might be forced for a group photo',
+        8: 'Make ___ of',
+        9: 'Role played by Morgan Freeman in “Bruce Almighty”',
       },
       down: {
-        1: 'Throw lightly',
-        2: 'The very highest point',
-        3: 'A living creature or entity',
-        5: 'In addition',
-        6: 'Require',
+        1: 'Decide possession with a coin ___',
+        2: 'Brand behind many a failed cartoon contraption',
+        3: 'Existence itself',
+        5: 'Word that adds another thing to the list',
+        6: 'Demand, rather than desire',
       },
     },
   },
   {
     id: 'sunny-side',
     title: 'Sunny Side',
-    difficulty: 'Medium',
     grid: ['BUD##', 'OPERA', 'SOLAR', 'SNAKE', '##YEA'],
     clues: {
       across: {
-        1: 'A flower before it opens',
-        4: 'Drama in which the dialogue is sung',
-        7: 'Powered by the sun',
-        8: 'Reptile that slithers',
-        9: 'A vote in favor',
+        1: 'Future bloomer',
+        4: 'Where the plot may thicken in Italian',
+        7: 'Like power generated on some rooftops',
+        8: 'Someone you should not trust with a secret',
+        9: 'Vote that keeps a motion moving',
       },
       down: {
-        1: 'Person in charge at work',
-        2: '“Once ___ a time…”',
-        3: 'A wait before the next train arrives, perhaps',
-        5: 'Tool for gathering fallen leaves',
-        6: 'Length times width, for a rectangle',
+        1: 'Person who signs off on your time off',
+        2: '“Once ___ a midnight dreary”',
+        3: 'What a spinning loading wheel can signal',
+        5: 'It gets leaves moving without a breeze',
+        6: 'What a rug covers',
       },
     },
   },
   {
     id: 'fresh-sweep',
     title: 'Fresh Sweep',
-    difficulty: 'Easy',
     grid: ['##TIN', '##ERA', 'SWEEP', 'EAT##', 'ASH##'],
     clues: {
       across: {
-        1: 'Metal used to coat some food cans',
-        4: 'A chapter of history',
-        5: 'Clean up with a broom',
-        7: 'Dig into dinner',
-        8: 'Powder left after a fire',
+        1: 'Copper’s partner in bronze',
+        4: 'A chapter in history or a pop star’s career',
+        5: 'Win without dropping a game',
+        7: 'Absorb, as a loss',
+        8: 'What remains after a log burns',
       },
       down: {
-        1: 'What a dentist checks',
-        2: 'Anger, in three letters',
-        3: 'A quick daytime snooze',
-        5: 'The salty water in “sail the seven ___s”',
-        6: 'Past tense of “is”',
+        1: 'What gives a law some bite?',
+        2: 'What an outrage might draw',
+        3: 'Brief break with your eyes closed',
+        5: 'A sailor may be at this, literally or figuratively',
+        6: '“As I ___ saying ...”',
       },
     },
   },
   {
     id: 'class-act',
     title: 'Class Act',
-    difficulty: 'Easy',
     grid: ['REF##', 'OWL##', 'TEACH', '##MOO', '##EGG'],
     clues: {
       across: {
-        1: 'Official who blows a whistle, for short',
-        4: 'Bird that might ask “Who?”',
-        5: 'Help someone learn a new skill',
-        8: 'Sound from a cow',
-        9: 'What hatches into a chick',
+        1: 'Caller on the court, for short',
+        4: 'Bird associated with late hours and wisdom',
+        5: 'School, as a verb',
+        8: 'Barnyard low',
+        9: 'Something beaten before breakfast, perhaps',
       },
       down: {
-        1: 'Spoil, as forgotten fruit',
-        2: 'A female sheep',
-        3: 'The flickering part of a candle',
-        6: 'A tooth on a gear',
-        7: 'Keep all to yourself, as the remote',
+        1: 'Turn, as neglected produce',
+        2: 'Soundalike of “you” found in a flock',
+        3: 'An old one might rekindle a romance',
+        6: 'Small player in a large organization',
+        7: 'Take more than your share of',
       },
     },
   },
   {
     id: 'bright-spark',
     title: 'Bright Spark',
-    difficulty: 'Easy',
     grid: ['##YAK', '##ONE', 'STUDY', 'ION##', 'PEG##'],
     clues: {
       across: {
-        1: 'Shaggy animal of the Himalayas',
-        4: 'The loneliest number, in a song title',
-        5: 'Prepare for a test',
-        7: 'An atom with an electric charge',
-        8: 'Small pin that a coat can hang on',
+        1: 'Hairy beast whose name can mean “chatter”',
+        4: 'Number that is neither prime nor composite',
+        5: 'Room where a professor might prepare for class',
+        7: 'Particle that has lost its electrical neutrality',
+        8: 'Knock someone down a ___',
       },
       down: {
-        1: 'Still in the early years of life',
-        2: 'Word joining “salt” and “pepper”',
-        3: 'Small object that opens a lock',
-        5: 'A tiny drink',
-        6: 'Little digit at the end of a foot',
+        1: 'Still getting carded, perhaps',
+        2: 'Word uniting rock with roll',
+        3: 'It can be major or minor',
+        5: 'Take it slowly, as a hot drink',
+        6: 'What a ballerina might balance on',
       },
     },
   },
 ];
+
+// Preserve past dates and their saves. Denser grids enter the rotation on this date.
+export const PACK_START_DATE = '2026-10-22';
+export const PUZZLES = [
+  ...LEGACY_PUZZLES.slice(0, 4),
+  {
+    id: 'house-rules',
+    title: 'House Rules',
+    grid: ['#ATM#', 'FLOOR', 'ALONE', 'NOTED', '#WHY#'],
+    clues: {
+      across: {
+        1: 'Cash machine, briefly',
+        4: 'The lowest price a seller will accept',
+        6: 'Without a plus one',
+        7: '“Message received”',
+        8: 'Question that asks for a motive',
+      },
+      down: {
+        1: 'Permit',
+        2: 'One of a comb’s many parts',
+        3: 'What talks, according to a saying',
+        4: 'Someone who might follow a band around',
+        5: 'In the ___ (owing money)',
+      },
+    },
+  },
+  {
+    id: 'mixed-signals',
+    title: 'Mixed Signals',
+    grid: ['#NFL#', 'SALES', 'IMAGE', 'REMIX', '#SET#'],
+    clues: {
+      across: {
+        1: 'League with a Super Bowl, briefly',
+        4: 'Events that bring prices down',
+        6: 'What a publicist helps polish',
+        7: 'Track given a new spin?',
+        8: 'Collection, or a place to film',
+      },
+      down: {
+        1: 'What a roll call calls for',
+        2: 'What a candle loses when you make a wish',
+        3: 'On the up and up, casually',
+        4: 'Title that may follow “Yes”',
+        5: 'Word before appeal or education',
+      },
+    },
+  },
+  {
+    id: 'second-wind',
+    title: 'Second Wind',
+    grid: ['#FLU#', 'GLORY', 'DODGE', 'PAGES', '#TED#'],
+    clues: {
+      across: {
+        1: 'Bug that may cancel your plans',
+        4: 'What a humble winner might share',
+        6: 'Get out of the way of',
+        7: 'Leaves that come from a printer?',
+        8: 'Name on talks with a red stage logo',
+      },
+      down: {
+        1: 'Parade attraction, or a drink with ice cream',
+        2: 'File, as a complaint',
+        3: 'Pressed to act',
+        4: 'Measure of an economy’s output: Abbr.',
+        5: 'Word that can turn a proposal into an engagement',
+      },
+    },
+  },
+];
+
 
 /** Derive standard crossword numbers and flat cell indices from a puzzle grid. */
 export function buildEntries(puzzle) {
@@ -210,5 +273,6 @@ export function getPuzzleForDate(key = dateKey()) {
     throw new RangeError('Invalid calendar date');
   }
   const day = Math.round((timestamp - Date.UTC(2026, 9, 21)) / 86_400_000);
-  return PUZZLES[((day % PUZZLES.length) + PUZZLES.length) % PUZZLES.length];
+  const pack = key < PACK_START_DATE ? LEGACY_PUZZLES : PUZZLES;
+  return pack[((day % pack.length) + pack.length) % pack.length];
 }
