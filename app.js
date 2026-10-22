@@ -114,6 +114,7 @@ function render() {
   $('#solved-badge').hidden = !solved;
   $('#pencil-button').setAttribute('aria-pressed', String(pencil));
   $('#pencil-button').disabled = solved;
+  $$('[data-menu]').forEach(button => { button.disabled = solved; });
   $('#timer').hidden = !settings.showTimer;
   $('#timer').textContent = formatTime(game.elapsedMs);
   $('#progress-text').textContent = `${game.filledCount} of ${game.openCells.length} squares${solved ? ' · nicely done!' : ''}`;
@@ -245,6 +246,7 @@ document.addEventListener('click', event => {
   if (action === 'confirm-reset') { closeDialog({resume:false}); game = new CrosswordGame(game.puzzle); lastTick = performance.now(); render(); focusGrid(); }
   if (action === 'confirm-reveal') { closeDialog(); start(); tick(); game.reveal('puzzle'); afterEdit(); }
   if (action === 'share') share();
+  if (action === 'results' && game.status === 'solved') openDialog('success');
 });
 
 function handleGameKey(key, shift = false) {
@@ -265,7 +267,7 @@ document.addEventListener('keydown', event => {
   if (event.key === 'Escape') { closeMenus(); $('#pause-button').focus(); return; }
   const inGrid = event.target.closest('#grid');
   const globalTyping = event.target === document.body;
-  if (inGrid || globalTyping || event.target.closest('#keyboard')) {
+  if (inGrid || globalTyping) {
     if (handleGameKey(event.key, event.shiftKey)) event.preventDefault();
   }
 });

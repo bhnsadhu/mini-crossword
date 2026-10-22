@@ -14,7 +14,7 @@ export class CrosswordGame {
     this.selected = this.openCells.includes(data.selected) ? data.selected : this.openCells[0];
     this.direction = data.direction === 'down' ? 'down' : 'across';
     this.assisted = Boolean(data.assisted);
-    this.elapsedMs = Math.max(0, Number(data.elapsedMs) || 0);
+    this.elapsedMs = Number.isFinite(Number(data.elapsedMs)) ? Math.max(0, Number(data.elapsedMs)) : 0;
     this.status = this.isComplete() ? 'solved' : data.status && data.status !== 'ready' ? 'paused' : 'ready';
   }
 
@@ -86,6 +86,7 @@ export class CrosswordGame {
   }
   scopeCells(scope) { return scope === 'square' ? [this.selected] : scope === 'word' ? this.activeEntry.cells : this.openCells; }
   check(scope) {
+    if (this.status === 'solved') return 0;
     const cells = this.scopeCells(scope).filter(i => this.values[i]);
     if (cells.length) this.assisted = true;
     for (const i of cells) if (this.marks[i] !== 'revealed') this.marks[i] = this.values[i] === this.solution[i] ? 'correct' : 'incorrect';
