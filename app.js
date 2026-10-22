@@ -18,7 +18,6 @@ const paths = {
   'arrow-down': '<path d="M12 4v16m-6-6 6 6 6-6"/>',
   keyboard: '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M7 16h10"/>',
   backspace: '<path d="M9 5h12v14H9l-7-7zM12 9l6 6M18 9l-6 6"/>',
-  sparkle: '<path d="m12 2 2.8 7.2L22 12l-7.2 2.8L12 22l-2.8-7.2L2 12l7.2-2.8z"/>',
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>',
   close: '<path d="m6 6 12 12M18 6 6 18"/>',
   check: '<path d="m5 12 4 4L19 6"/>',
@@ -58,7 +57,7 @@ function tick() {
 }
 function save() {
   writeStore(`game:${activeDate}`, game.snapshot());
-  $('#save-status').textContent = storageAvailable ? 'Progress saved on this device' : 'Progress is not saved in this browser';
+  $('#save-status').textContent = storageAvailable ? 'Saved on this device' : 'Progress is not saved in this browser';
 }
 function start() {
   if (game.status === 'ready' || game.status === 'paused') { lastTick = performance.now(); game.start(); }
@@ -117,7 +116,7 @@ function render() {
   $$('[data-menu]').forEach(button => { button.disabled = solved; });
   $('#timer').hidden = !settings.showTimer;
   $('#timer').textContent = formatTime(game.elapsedMs);
-  $('#progress-text').textContent = `${game.filledCount} of ${game.openCells.length} squares${solved ? ' · nicely done!' : ''}`;
+  $('#progress-text').textContent = `${game.filledCount} of ${game.openCells.length} squares${solved ? ' · Solved' : ''}`;
   $('#keyboard').hidden = !settings.keyboard || paused || solved;
   $('#keyboard-toggle').setAttribute('aria-expanded', String(settings.keyboard));
   $('#autocheck-indicator').textContent = settings.autoCheck ? 'On' : 'Off';
@@ -138,7 +137,7 @@ function afterEdit() {
     openDialog('success');
   } else {
     render(); focusGrid();
-    if (game.filledCount === game.openCells.length) toast('Almost there! One or more squares aren’t quite right.');
+    if (game.filledCount === game.openCells.length) toast('One or more letters are incorrect.');
   }
 }
 function typeLetter(letter) {
@@ -171,14 +170,14 @@ function openDialog(kind) {
   const content = $('#dialog-content');
   const setting = (key, title, detail) => `<label class="setting-row"><span><strong>${title}</strong><small>${detail}</small></span><input type="checkbox" data-setting="${key}" ${settings[key] ? 'checked' : ''}></label>`;
   const templates = {
-    help: () => `<div class="dialog-eyebrow">YOUR DAILY LITTLE VICTORY</div><h2 id="dialog-title">A little grid.<br>A few good clues.</h2><p>Fill the white squares to solve the crossword. Each letter belongs to both an Across and a Down answer.</p><div class="help-steps"><div class="help-step"><span class="step-number">1</span><div><strong>Pick a clue. Find your word.</strong><p>Click a clue or a square, then type your answer. Tap the same square again to switch direction.</p></div></div><div class="help-step"><span class="step-number">2</span><div><strong>Let the crossings help.</strong><p>Blue squares show your word; yellow is where you’re typing. Try a different clue when you get stuck.</p></div></div><div class="help-step"><span class="step-number">3</span><div><strong>Make it your kind of break.</strong><p>Race the timer or take your time. Check marks mistakes; Reveal gives you a little help.</p></div></div></div><div class="shortcuts"><div class="shortcut"><kbd>Space</kbd> Change direction</div><div class="shortcut"><kbd>Tab</kbd> Next clue</div><div class="shortcut"><kbd>↑ ↓ ← →</kbd> Move</div><div class="shortcut"><kbd>Shift Tab</kbd> Previous clue</div></div><div class="dialog-actions"><button class="primary-button" data-action="close">Let’s play</button></div>`,
-    settings: () => `<div class="dialog-eyebrow">MAKE YOURSELF AT HOME</div><h2 id="dialog-title">Your preferences.</h2><p>A few small things, just the way you like them.</p>${setting('skipFilled','Skip filled squares','Move to the next empty square as you type.')}${setting('showTimer','Show timer','A little competition with yourself. Or no rush.')}${setting('autoCheck','Autocheck','Mark incorrect letters as you type. Counts as help.')}${setting('keyboard','On-screen keyboard','Handy for touchscreens and mouse-only play.')}<div class="dialog-actions"><button class="primary-button" data-action="close">Done</button></div>`,
-    archive: () => `<div class="dialog-eyebrow">THERE’S ALWAYS ANOTHER LITTLE WIN</div><h2 id="dialog-title">The past week.</h2><p>Missed a day? No problem. Pick a puzzle and settle in.</p><div class="archive-list">${Array.from({length:7},(_, n) => { const day = previousDate(dateKey(), n); const saved = readStore('game:' + day, {}); const record = records[day]; return `<button class="archive-item ${day === activeDate ? 'current' : ''}" data-date="${day}"><span><strong>${n === 0 ? 'Today' : prettyDate(day,{weekday:'long',month:'short',day:'numeric'})}</strong><small>${getPuzzleForDate(day).difficulty} · 5 × 5 mini</small></span><span class="archive-status">${record ? '✓ ' + formatTime(record.elapsedMs) : saved.values?.some(Boolean) ? 'In progress' : 'Play →'}</span></button>`; }).join('')}</div>`,
-    stats: () => `<div class="dialog-eyebrow">ONE SMALL WIN AT A TIME</div><h2 id="dialog-title">Your little record.</h2><p>Every finished grid is something to feel good about.</p>${statsMarkup()}<p class="stats-note">Your streak counts consecutive puzzle dates completed, including the archive. Best time counts solves without Check, Reveal, or Autocheck. Stats stay on this browser.</p><div class="dialog-actions"><button class="primary-button" data-action="close">Back to the grid</button></div>`,
-    reset: () => `<div class="dialog-eyebrow">A CLEAN SLATE</div><h2 id="dialog-title">Start this one over?</h2><p>This clears this puzzle’s letters and resets its timer. Your completed-puzzle record stays saved.</p><div class="dialog-actions"><button class="secondary-button" data-action="close">Keep playing</button><button class="primary-button" data-action="confirm-reset">Start over</button></div>`,
-    reveal: () => `<div class="dialog-eyebrow">A LITTLE HELP</div><h2 id="dialog-title">Reveal the puzzle?</h2><p>This fills every square with its answer and finishes the puzzle as an assisted solve.</p><div class="dialog-actions"><button class="secondary-button" data-action="close">Keep trying</button><button class="primary-button" data-action="confirm-reveal">Reveal puzzle</button></div>`,
-    success: () => `<div class="success-content"><div class="success-icon">${icon('sparkle')}</div><div class="dialog-eyebrow">SMALL GRID. BIG LITTLE VICTORY.</div><h2 id="dialog-title">Look at you go.</h2><p>One little puzzle, beautifully finished.</p><div class="success-time">${formatTime(game.elapsedMs)}</div><div class="success-label">${game.assisted ? 'Solved with a little help' : 'Solved, all you'}</div>${statsMarkup()}<div class="dialog-actions"><button class="primary-button" data-action="share">${icon('share')} Share your little win</button><button class="secondary-button" data-action="archive">Try another mini</button></div><button class="text-link" data-action="close">Back to your puzzle</button></div>`,
-    privacy: () => `<div class="dialog-eyebrow">JUST YOU AND THE GRID</div><h2 id="dialog-title">Keep it simple.</h2><p>Your answers, times, preferences, and stats are saved in this browser’s local storage. There’s no account, advertising, or game analytics.</p><p>Clearing your browser data clears that progress. The site is hosted on Vercel, which processes normal web requests. Fonts load from Google Fonts.</p><p>This is an independent crossword game with original puzzles, not affiliated with The New York Times.</p><div class="dialog-actions"><button class="primary-button" data-action="close">Got it</button></div>`,
+    help: () => `<h2 id="dialog-title">How to play</h2><p>Fill the white squares. Each letter belongs to an Across answer and a Down answer.</p><div class="help-steps"><div class="help-step"><span class="step-number">1</span><div><strong>Select a square or clue</strong><p>Type your answer. Select the same square again to switch direction.</p></div></div><div class="help-step"><span class="step-number">2</span><div><strong>Follow the highlights</strong><p>Blue squares show the selected word. Yellow marks the square you’re typing in.</p></div></div><div class="help-step"><span class="step-number">3</span><div><strong>Check or reveal an answer</strong><p>Check marks incorrect letters. Reveal fills in answers. Both count as assistance.</p></div></div></div><div class="shortcuts"><div class="shortcut"><kbd>Space</kbd> Change direction</div><div class="shortcut"><kbd>Tab</kbd> Next clue</div><div class="shortcut"><kbd>↑ ↓ ← →</kbd> Move</div><div class="shortcut"><kbd>Shift Tab</kbd> Previous clue</div></div><div class="dialog-actions"><button class="primary-button" data-action="close">Back to puzzle</button></div>`,
+    settings: () => `<h2 id="dialog-title">Settings</h2>${setting('skipFilled','Skip filled squares','Move to the next empty square as you type.')}${setting('showTimer','Show timer','Display elapsed time while playing.')}${setting('autoCheck','Autocheck','Mark incorrect letters as you type. Counts as assistance.')}${setting('keyboard','On-screen keyboard','Display a keyboard below the puzzle.')}<div class="dialog-actions"><button class="primary-button" data-action="close">Done</button></div>`,
+    archive: () => `<h2 id="dialog-title">Archive</h2><p>Puzzles from the past seven days.</p><div class="archive-list">${Array.from({length:7},(_, n) => { const day = previousDate(dateKey(), n); const saved = readStore('game:' + day, {}); const record = records[day]; return `<button class="archive-item ${day === activeDate ? 'current' : ''}" data-date="${day}"><span><strong>${n === 0 ? 'Today' : prettyDate(day,{weekday:'long',month:'short',day:'numeric'})}</strong><small>${getPuzzleForDate(day).difficulty} · 5 × 5</small></span><span class="archive-status">${record ? 'Solved · ' + formatTime(record.elapsedMs) : saved.values?.some(Boolean) ? 'In progress' : 'Play'}</span></button>`; }).join('')}</div>`,
+    stats: () => `<h2 id="dialog-title">Statistics</h2>${statsMarkup()}<p class="stats-note">Streaks count consecutive puzzle dates completed, including the archive. Best time excludes solves with Check, Reveal, or Autocheck. Statistics are saved in this browser.</p><div class="dialog-actions"><button class="primary-button" data-action="close">Back to puzzle</button></div>`,
+    reset: () => `<h2 id="dialog-title">Restart puzzle?</h2><p>This clears the letters and resets the timer. Your completed-puzzle record stays saved.</p><div class="dialog-actions"><button class="secondary-button" data-action="close">Cancel</button><button class="primary-button" data-action="confirm-reset">Restart puzzle</button></div>`,
+    reveal: () => `<h2 id="dialog-title">Reveal puzzle?</h2><p>This fills every square with its answer and records the puzzle as an assisted solve.</p><div class="dialog-actions"><button class="secondary-button" data-action="close">Cancel</button><button class="primary-button" data-action="confirm-reveal">Reveal puzzle</button></div>`,
+    success: () => `<div class="success-content"><h2 id="dialog-title">Puzzle solved</h2><div class="success-time">${formatTime(game.elapsedMs)}</div><div class="success-label">${game.assisted ? 'Solved with assistance' : 'Solved without assistance'}</div>${statsMarkup()}<div class="dialog-actions"><button class="primary-button" data-action="share">${icon('share')} Share result</button><button class="secondary-button" data-action="archive">Play another</button></div><button class="text-link" data-action="close">Back to puzzle</button></div>`,
+    privacy: () => `<h2 id="dialog-title">Privacy</h2><p>Your answers, times, preferences, and statistics are saved in this browser’s local storage. There’s no account, advertising, or game analytics.</p><p>Clearing your browser data clears that progress. The site is hosted on Vercel, which processes web requests. Fonts load from Google Fonts.</p><p>This is an independent crossword game with original puzzles, not affiliated with The New York Times.</p><div class="dialog-actions"><button class="primary-button" data-action="close">Done</button></div>`,
   };
   content.innerHTML = templates[kind]();
   if (!dialog.open) dialog.showModal();
@@ -192,10 +191,10 @@ function closeDialog({ resume = true } = {}) {
   if (lastFocusedElement?.isConnected) lastFocusedElement.focus({ preventScroll: true });
 }
 async function share() {
-  const text = `Mini · ${prettyDate(activeDate,{month:'short',day:'numeric',year:'numeric'})}\n${game.assisted ? '✦' : '✓'} ${formatTime(game.elapsedMs)}${game.assisted ? ' · with help' : ''}\nA little daily victory.\n${location.origin}`;
-  try { await navigator.clipboard.writeText(text); toast('Result copied. A little win worth sharing.'); }
+  const text = `Mini · ${prettyDate(activeDate,{month:'short',day:'numeric',year:'numeric'})}\n${formatTime(game.elapsedMs)}${game.assisted ? ' · Assisted' : ''}\n${location.origin}`;
+  try { await navigator.clipboard.writeText(text); toast('Result copied.'); }
   catch {
-    $('#dialog-content').innerHTML = `<div class="dialog-eyebrow">PASS THE GOOD FEELING ON</div><h2 id="dialog-title">Share your mini.</h2><p>Copy your result below.</p><textarea class="share-fallback" rows="5" readonly>${escape(text)}</textarea><div class="dialog-actions"><button class="primary-button" data-action="close">Done</button></div>`;
+    $('#dialog-content').innerHTML = `<h2 id="dialog-title">Share result</h2><p>Copy your result below.</p><textarea class="share-fallback" rows="5" readonly>${escape(text)}</textarea><div class="dialog-actions"><button class="primary-button" data-action="close">Done</button></div>`;
     $('.share-fallback').focus(); $('.share-fallback').select();
   }
 }
@@ -223,7 +222,7 @@ document.addEventListener('click', event => {
     if (game.status === 'paused') { toast('Resume the puzzle first.'); return; }
     const cells = game.scopeCells(target.dataset.check).filter(i => game.values[i]);
     const wrong = game.check(target.dataset.check); closeMenus(); render();
-    toast(cells.length ? wrong ? `${wrong} ${wrong === 1 ? 'square needs' : 'squares need'} another look.` : 'The letters you’ve entered look good!' : 'Fill a square first, then check it.'); focusGrid(); return;
+    toast(cells.length ? wrong ? `${wrong} incorrect ${wrong === 1 ? 'letter' : 'letters'}.` : 'All entered letters are correct.' : 'Enter a letter to check.'); focusGrid(); return;
   }
   if (target.dataset.reveal) {
     if (game.status === 'paused') { toast('Resume the puzzle first.'); return; }
@@ -239,7 +238,7 @@ document.addEventListener('click', event => {
   if (action === 'close') closeDialog();
   if (action === 'pencil') { pencil = !pencil; render(); focusGrid(); }
   if (action === 'keyboard') { settings.keyboard = !settings.keyboard; writeStore('settings', settings); render(); }
-  if (action === 'autocheck') { settings.autoCheck = !settings.autoCheck; writeStore('settings',settings); render(); closeMenus(); toast(`Autocheck ${settings.autoCheck ? 'on — this solve will count as assisted when you type.' : 'off.'}`); }
+  if (action === 'autocheck') { settings.autoCheck = !settings.autoCheck; writeStore('settings',settings); render(); closeMenus(); toast(`Autocheck ${settings.autoCheck ? 'on. Typing now counts as assistance.' : 'off.'}`); }
   if (action === 'pause') { if (game.status === 'paused') start(); else if (game.status !== 'solved') { tick(); game.status = 'paused'; } render(); }
   if (action === 'resume') { start(); render(); focusGrid(); }
   if (action === 'next' || action === 'previous') { if (game.status === 'paused') return; start(); game.nextEntry(action === 'next' ? 1 : -1); render(); focusGrid(); }
@@ -280,7 +279,7 @@ dialog.addEventListener('cancel', event => { event.preventDefault(); closeDialog
 dialog.addEventListener('click', event => { if (event.target === dialog) { const rect = dialog.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeDialog(); } });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden && game.status === 'playing') { tick(); game.status = 'paused'; render(); }
-  if (!document.hidden && activeDate !== dateKey() && !dialog.open) toast('A new day, a new mini. Open Daily mini to play today.');
+  if (!document.hidden && activeDate !== dateKey() && !dialog.open) toast('Select Today to play today’s puzzle.');
 });
 window.addEventListener('pagehide', () => { tick(); save(); });
 setInterval(() => { tick(); if (game.status === 'playing') save(); }, 1000);
