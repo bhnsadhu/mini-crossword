@@ -2,7 +2,7 @@ import { CrosswordGame } from './game.js';
 import { getPuzzleForDate, dateKey } from './puzzles.js';
 
 const paths = {
-  stats: '<path d="M4 20V12h4v8M10 20V4h4v16M16 20V8h4v12"/>',
+  stats: '<rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="3" width="4" height="18" rx="1"/><rect x="17" y="8" width="4" height="13" rx="1"/>',
   settings: '<path d="m9.5 3-.7 2.2-2 .9-2.2-.5-2 3.4 1.5 1.7v2.6L2.6 15l2 3.4 2.2-.5 2 .9.7 2.2h4l.7-2.2 2-.9 2.2.5 2-3.4-1.5-1.7v-2.6l1.5-1.7-2-3.4-2.2.5-2-.9-.7-2.2z"/><circle cx="11.5" cy="12" r="3"/>',
   help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 .5c0 1.5-2.5 2-2.5 3.5M12 16.5h.01"/>',
   clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
@@ -81,6 +81,7 @@ function loadPuzzle(key) {
   for (const direction of ['across', 'down']) {
     $(`#${direction}-clues`).innerHTML = game.entries[direction].map(entry => `<li><button class="clue-button" data-clue="${entry.number}" data-direction="${direction}"><span class="clue-number">${entry.number}</span><span class="clue-text">${escape(entry.clue)}</span></button></li>`).join('');
   }
+  $('#clues-panel').style.setProperty('--clue-rows', Math.max(game.entries.across.length, game.entries.down.length));
   render();
 }
 function render() {
@@ -177,7 +178,7 @@ function openDialog(kind) {
     reset: () => `<h2 id="dialog-title">Restart puzzle?</h2><p>This clears the letters and resets the timer. Your saved statistics stay.</p><div class="dialog-actions"><button class="secondary-button" data-action="close">Cancel</button><button class="primary-button" data-action="confirm-reset">Restart puzzle</button></div>`,
     reveal: () => `<h2 id="dialog-title">Reveal puzzle?</h2><p>This fills every square with its answer and records the puzzle as an assisted solve.</p><div class="dialog-actions"><button class="secondary-button" data-action="close">Cancel</button><button class="primary-button" data-action="confirm-reveal">Reveal puzzle</button></div>`,
     success: () => `<div class="success-content"><h2 id="dialog-title">Puzzle solved</h2><div class="success-time">${formatTime(game.elapsedMs)}</div><div class="success-label">${game.assisted ? 'Solved with assistance' : 'Solved without assistance'}</div><div class="dialog-actions"><button class="primary-button" data-action="share">${icon('share')} Share result</button><button class="secondary-button" data-action="archive">Play another</button></div><button class="text-link" data-action="close">Back to puzzle</button></div>`,
-    privacy: () => `<h2 id="dialog-title">Privacy</h2><p>Your answers, times, preferences, and statistics are saved in this browser’s local storage. There’s no account, advertising, or game analytics.</p><p>Clearing your browser data clears that progress. The site is hosted on Vercel, which processes web requests. Fonts load from Google Fonts.</p><p>This is an independent crossword game with original puzzles, not affiliated with The New York Times.</p><div class="dialog-actions"><button class="primary-button" data-action="close">Done</button></div>`,
+    privacy: () => `<h2 id="dialog-title">Privacy</h2><p>Your answers, times, preferences, and statistics are saved in this browser’s local storage. There’s no account, advertising, or game analytics.</p><p>Clearing your browser data clears that progress. The site is hosted on Vercel, which processes web requests. Fonts are hosted with the site.</p><p>This is an independent crossword game with original puzzles, not affiliated with The New York Times.</p><div class="dialog-actions"><button class="primary-button" data-action="close">Done</button></div>`,
   };
   content.innerHTML = templates[kind]();
   if (!dialog.open) dialog.showModal();

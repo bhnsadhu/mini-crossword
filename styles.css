@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;650;700&display=swap');
+@font-face { font-family: 'Inter'; src: url('/assets/fonts/Inter.woff2') format('woff2'); font-style: normal; font-weight: 100 900; font-display: swap; }
 
 :root {
   color-scheme: light;
@@ -35,12 +35,13 @@ button [data-icon] { display: inline-flex; align-items: center; justify-content:
 /* Navigation */
 .site-header { max-width: 1120px; margin: 0 auto; height: 84px; padding: 0 32px; display: flex; align-items: center; gap: 48px; }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--green); text-decoration: none; font-size: 32px; font-weight: 550; letter-spacing: -.04em; }
-.brand img { width: 28px; height: 28px; }
+.brand img { display: block; width: 100px; height: 32px; }
 .main-nav { display: flex; align-items: center; gap: 34px; height: 100%; }
 .nav-link { height: 100%; padding: 0; position: relative; font-size: 14px; font-weight: 500; color: var(--muted); }
 .nav-link.active { color: var(--green); }
 .nav-link.active { font-weight: 600; }
-.header-actions { display: flex; gap: 12px; margin-left: auto; }
+.header-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+.header-actions svg { width: 20px; height: 20px; stroke-width: 1.8; }
 .icon-button { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; }
 .icon-button:hover { background: var(--pale-green); }
 .icon-button.small { width: 44px; height: 44px; }
@@ -103,13 +104,17 @@ h1 { font-size: 32px; font-weight: 500; letter-spacing: -.03em; line-height: 1.1
 .board-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; color: var(--muted); font-size: 12px; }
 .quiet-button { display: flex; align-items: center; gap: 7px; color: var(--ink); font-size: 12px; padding: 10px 0; }
 .quiet-button svg { width: 15px; height: 15px; }
-.clues-panel { display: grid; grid-template-columns: 1fr 1fr; align-content: start; column-gap: 28px; row-gap: 24px; min-width: 0; }
-.clue-section { min-width: 0; }
-.clue-section h3 { margin: 0 0 12px; padding: 4px 12px 10px; font-size: 18px; letter-spacing: -.4px; font-weight: 500; }
-.clue-section ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-.clue-button { width: 100%; display: flex; align-items: baseline; gap: 10px; text-align: left; padding: 13px 12px; font-size: 14px; line-height: 1.5; min-height: 54px; }
-.clue-number { min-width: 12px; font-size: 12px; font-weight: 600; }
-.clue-text { color: #485244; }
+/* Both lists share row tracks, including rows containing wrapped clues. */
+.clues-panel { --clue-inset: 12px; --clue-rows: 5; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto repeat(var(--clue-rows), auto); align-content: start; column-gap: 28px; row-gap: 4px; min-width: 0; }
+.clue-section { min-width: 0; display: grid; grid-template-rows: subgrid; grid-row: 1 / -1; }
+.clue-section:first-child { grid-column: 1; }
+.clue-section:last-child { grid-column: 2; }
+.clue-section h3 { margin: 0 0 8px; padding: 4px var(--clue-inset) 10px; font-size: 18px; line-height: 1.4; letter-spacing: -.02em; font-weight: 500; }
+.clue-section ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-rows: subgrid; grid-row: 2 / -1; }
+.clue-section li { min-width: 0; }
+.clue-button { width: 100%; height: 100%; display: flex; align-items: baseline; gap: 10px; text-align: left; padding: 13px var(--clue-inset); font-size: 14px; line-height: 1.5; min-height: 54px; }
+.clue-number { flex: 0 0 16px; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.clue-text { min-width: 0; color: #485244; }
 .clue-button:hover { background: var(--pale-green); }
 .clue-button.active { background: var(--blue); }
 .clue-button.active .clue-text { color: #263f4c; }
@@ -189,9 +194,8 @@ dialog p { font-size: 13px; line-height: 1.7; color: #636e5d; margin: 0 0 16px; 
   .intro { gap: 16px; }
   h1 { font-size: 32px; }
   .game-content { grid-template-columns: 350px minmax(0, 1fr); gap: 30px; }
-  .clues-panel { column-gap: 14px; }
-  .clue-button { font-size: 13px; padding: 12px 8px; }
-  .clue-section h3 { padding-left: 8px; }
+  .clues-panel { --clue-inset: 8px; column-gap: 14px; }
+  .clue-button { font-size: 13px; padding-top: 12px; padding-bottom: 12px; }
   .puzzle-heading h2 { font-size: 12px; }
 }
 
@@ -202,14 +206,13 @@ dialog p { font-size: 13px; line-height: 1.7; color: #636e5d; margin: 0 0 16px; 
   .game-content { grid-template-columns: 340px minmax(0, 1fr); gap: 48px; padding-top: 20px; }
   .active-clue { min-height: 55px; margin-bottom: 12px; }
   .clue-button { padding-top: 10px; padding-bottom: 10px; min-height: 48px; }
-  .clues-panel { row-gap: 18px; }
   .cell-letter { font-size: 34px; }
 }
 
 @media (max-width: 700px) {
   .site-header { max-width: 490px; height: 64px; padding: 0 20px; gap: 26px; }
   .brand { font-size: 27px; gap: 7px; letter-spacing: -.04em; }
-  .brand img { width: 24px; height: 24px; }
+  .brand img { width: 87.5px; height: 28px; }
   .main-nav { gap: 18px; }
   .nav-link { font-size: 12px; }
   .header-actions { gap: 0; }
@@ -240,9 +243,9 @@ dialog p { font-size: 13px; line-height: 1.7; color: #636e5d; margin: 0 0 16px; 
   .keyboard { padding-top: 16px; }
   .key { max-width: none; height: 44px; }
   .key.wide { max-width: 58px; }
-  .clues-panel { column-gap: 18px; }
-  .clue-section h3 { font-size: 17px; padding: 0 7px 13px; }
-  .clue-button { min-height: 48px; padding: 11px 7px; font-size: 13px; }
+  .clues-panel { --clue-inset: 8px; column-gap: 18px; }
+  .clue-section h3 { font-size: 17px; padding-top: 0; padding-bottom: 13px; }
+  .clue-button { min-height: 48px; padding-top: 11px; padding-bottom: 11px; font-size: 13px; }
   .site-footer { margin-top: 8px; padding: 20px 0 28px; font-size: 12px; align-items: flex-start; }
   .site-footer .footer-credit { align-items: flex-start; flex-direction: column; gap: 10px; padding-top: 12px; }
   .site-footer div { gap: 18px; }

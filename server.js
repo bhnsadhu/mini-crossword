@@ -6,7 +6,7 @@ const args = process.argv.slice(2);
 const port = Number(args[args.indexOf('--port') + 1]) || Number(process.env.PORT) || 5173;
 const host = args.includes('--host') ? (args[args.indexOf('--host') + 1] || '0.0.0.0') : '127.0.0.1';
 const root = resolve('.');
-const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml' };
+const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon', '.woff2': 'font/woff2', '.webmanifest': 'application/manifest+json' };
 createServer(async (req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
@@ -15,7 +15,7 @@ createServer(async (req, res) => {
       res.writeHead(404); res.end('Not found'); return;
     }
     const content = await readFile(path);
-    res.writeHead(200, { 'Content-Type': `${types[extname(path)]}; charset=utf-8`, 'Cache-Control': 'no-store' });
+    res.writeHead(200, { 'Content-Type': types[extname(path)], 'Cache-Control': 'no-store' });
     res.end(content);
   } catch { res.writeHead(404); res.end('Not found'); }
 }).listen(port, host, () => console.log(`Mini Crossword: http://${host}:${port}`));

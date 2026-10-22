@@ -7,7 +7,13 @@
     "dev": "node server.js",
     "start": "node server.js",
     "test": "node --test",
-    "build": "node build.js"
+    "build": "node build.js",
+    "assets": "node scripts/generate-brand-assets.mjs"
   },
-  "engines": { "node": ">=22" }
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
 }
