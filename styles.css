@@ -5,7 +5,7 @@
   --paper: #faf9f6;
   --white: #fff;
   --ink: #242c27;
-  --muted: #737a70;
+  --muted: #646c61;
   --line: #dedfd7;
   --green: #314a39;
   --pale-green: #eef1e9;
@@ -23,50 +23,51 @@ button, a, input { -webkit-tap-highlight-color: transparent; }
 button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
 button, a { touch-action: manipulation; }
 button:disabled { opacity: .4; cursor: default; }
-button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid #3676a4; outline-offset: 4px; }
-a { color: inherit; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
+a { color: inherit; text-underline-offset: 3px; }
+::selection { background: var(--yellow); color: var(--ink); }
+input, textarea { caret-color: var(--green); }
 button:hover { color: #090f0a; }
 [hidden] { display: none !important; }
 svg { width: 20px; height: 20px; display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; }
 button [data-icon] { display: inline-flex; align-items: center; justify-content: center; }
 
 /* Navigation */
-.site-header { height: 76px; padding: 0 max(32px, calc((100vw - 1280px) / 2)); display: flex; align-items: center; gap: 66px; border-bottom: 1px solid var(--line); }
-.brand { display: flex; align-items: center; gap: 10px; color: var(--green); text-decoration: none; font-size: 32px; font-weight: 550; letter-spacing: -1.8px; }
+.site-header { max-width: 1120px; margin: 0 auto; height: 84px; padding: 0 32px; display: flex; align-items: center; gap: 48px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--green); text-decoration: none; font-size: 32px; font-weight: 550; letter-spacing: -.04em; }
 .brand img { width: 28px; height: 28px; }
 .main-nav { display: flex; align-items: center; gap: 34px; height: 100%; }
 .nav-link { height: 100%; padding: 0; position: relative; font-size: 14px; font-weight: 500; color: var(--muted); }
 .nav-link.active { color: var(--green); }
-.nav-link.active::after { content: ''; position: absolute; height: 2px; left: 0; right: 0; bottom: -1px; background: var(--green); }
+.nav-link.active { font-weight: 600; }
 .header-actions { display: flex; gap: 12px; margin-left: auto; }
-.icon-button { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; }
+.icon-button { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; }
 .icon-button:hover { background: var(--pale-green); }
-.icon-button.small { width: 32px; height: 32px; }
+.icon-button.small { width: 44px; height: 44px; }
 .icon-button.small svg { width: 16px; height: 16px; }
 
 /* A single workspace, without a card shell. */
 .page { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
-.intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 42px 0 32px; }
-h1 { font-size: clamp(44px, 5vw, 64px); font-weight: 500; letter-spacing: -3.5px; line-height: 1.06; margin: 0; }
-.puzzle-heading { text-align: right; padding-bottom: 4px; flex-shrink: 0; }
+.intro { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 36px 0 24px; }
+h1 { font-size: 32px; font-weight: 500; letter-spacing: -.03em; line-height: 1.15; margin: 0; }
+.puzzle-heading { text-align: right; padding-bottom: 0; flex-shrink: 0; }
 .puzzle-heading h2 { margin: 0 0 7px; font-size: 14px; line-height: 1.4; font-weight: 500; letter-spacing: -.2px; }
 .puzzle-heading > span { color: var(--muted); font-size: 12px; }
-.toolbar { display: flex; align-items: center; justify-content: space-between; min-height: 58px; padding: 8px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.toolbar { display: flex; align-items: center; justify-content: space-between; min-height: 58px; padding: 0; }
 .timer-group { display: flex; align-items: center; gap: 10px; font-size: 17px; font-variant-numeric: tabular-nums; letter-spacing: -.5px; }
 .timer-group > [data-icon] svg { width: 18px; height: 18px; }
 #timer { min-width: 39px; }
-#solved-badge { color: var(--green); font-size: 12px; letter-spacing: 0; border: 1px solid #b7c4b1; padding: 7px 12px; border-radius: 20px; }
+#solved-badge { color: var(--green); font-size: 12px; letter-spacing: 0; padding: 7px 12px; text-decoration: underline; text-underline-offset: 3px; }
 .game-tools { display: flex; align-items: center; gap: 13px; }
-.tool-button { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; padding: 9px 12px; min-height: 36px; border-radius: 24px; }
+.tool-button { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; padding: 9px 12px; min-height: 44px; border-radius: 6px; }
 .tool-button:hover, .tool-button[aria-expanded='true'] { background: var(--pale-green); }
 .tool-button svg { width: 13px; height: 13px; }
-.pencil-button { width: 36px; padding: 9px; }
+.pencil-button { width: 44px; padding: 9px; }
 .pencil-button svg, .reset-button svg { width: 17px; height: 17px; }
 .pencil-button[aria-pressed='true'] { background: var(--yellow); }
-.reset-button { width: 36px; padding: 9px; }
+.reset-button { width: 44px; padding: 9px; }
 #pause-button:disabled, .pencil-button:disabled { display: none; }
-.menu-wrap:has(> button:disabled), .game-tools:has(.pencil-button:disabled) .tool-divider { display: none; }
-.tool-divider { width: 1px; height: 18px; background: var(--line); }
+.menu-wrap:has(> button:disabled) { display: none; }
 .menu-wrap { position: relative; }
 .tool-menu { position: absolute; right: 0; top: 43px; width: 192px; background: var(--paper); border: 1px solid var(--line); border-radius: 6px; z-index: 10; padding: 6px; box-shadow: 0 8px 24px #17211b12; }
 .tool-menu button { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 12px; font-size: 13px; text-align: left; border-radius: 3px; }
@@ -75,14 +76,14 @@ h1 { font-size: clamp(44px, 5vw, 64px); font-weight: 500; letter-spacing: -3.5px
 .tool-menu button span { font-size: 11px; color: var(--muted); }
 
 /* Grid and clues */
-.game-content { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 64px; padding: 26px 0 22px; }
+.game-content { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 64px; padding: 14px 0 22px; }
 .board-column { min-width: 0; }
 .active-clue { min-height: 62px; display: flex; align-items: center; gap: 7px; background: var(--blue); padding: 8px 5px; margin-bottom: 14px; }
 .clue-arrow { width: 28px; min-width: 28px; min-height: 40px; display: flex; align-items: center; justify-content: center; }
 .clue-arrow:hover { background: #cbdce8; }
 .clue-arrow svg { width: 14px; height: 14px; }
 #active-clue { flex: 1; font-size: 14px; line-height: 1.4; }
-#active-clue strong { display: block; font-size: 10px; font-weight: 600; letter-spacing: .3px; margin-bottom: 4px; color: #4b6576; }
+#active-clue strong { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0; margin-bottom: 4px; color: #4b6576; }
 #active-clue span { display: block; }
 .grid-wrap { position: relative; }
 .crossword-grid { display: grid; grid-template-columns: repeat(5, 1fr); aspect-ratio: 1; width: 100%; border: 2px solid #252c28; gap: 1px; background: #252c28; overflow: hidden; }
@@ -99,12 +100,12 @@ h1 { font-size: clamp(44px, 5vw, 64px); font-weight: 500; letter-spacing: -3.5px
 .cell.revealed::after { content: ''; position: absolute; top: 0; right: 0; border-top: 9px solid #5384a1; border-left: 9px solid transparent; }
 .crossword-grid.solved .cell:not(.block) { background: #eef3e9; }
 .crossword-grid.solved .cell.selected { background: #dce8d2; }
-.board-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; color: var(--muted); font-size: 11px; }
-.quiet-button { display: flex; align-items: center; gap: 7px; color: var(--ink); font-size: 12px; padding: 4px 0; }
+.board-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; color: var(--muted); font-size: 12px; }
+.quiet-button { display: flex; align-items: center; gap: 7px; color: var(--ink); font-size: 12px; padding: 10px 0; }
 .quiet-button svg { width: 15px; height: 15px; }
 .clues-panel { display: grid; grid-template-columns: 1fr 1fr; align-content: start; column-gap: 28px; row-gap: 24px; min-width: 0; }
 .clue-section { min-width: 0; }
-.clue-section h3 { margin: 0 0 12px; padding: 4px 12px 17px; border-bottom: 1px solid var(--line); font-size: 18px; letter-spacing: -.4px; font-weight: 500; }
+.clue-section h3 { margin: 0 0 12px; padding: 4px 12px 10px; font-size: 18px; letter-spacing: -.4px; font-weight: 500; }
 .clue-section ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
 .clue-button { width: 100%; display: flex; align-items: baseline; gap: 10px; text-align: left; padding: 13px 12px; font-size: 14px; line-height: 1.5; min-height: 54px; }
 .clue-number { min-width: 12px; font-size: 12px; font-weight: 600; }
@@ -112,18 +113,18 @@ h1 { font-size: clamp(44px, 5vw, 64px); font-weight: 500; letter-spacing: -3.5px
 .clue-button:hover { background: var(--pale-green); }
 .clue-button.active { background: var(--blue); }
 .clue-button.active .clue-text { color: #263f4c; }
-.clue-button.crossing { box-shadow: inset 2px 0 #b9cedb; }
-.clue-button.filled .clue-text { color: #838a7d; }
+.clue-button.crossing .clue-number { text-decoration: underline; text-underline-offset: 4px; }
+.clue-button.filled .clue-text { color: #646e5f; }
 .clue-button.active.filled .clue-text { color: #526774; }
-.shortcut-hints { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 20px; padding: 3px 12px 0; color: var(--muted); font-size: 11px; }
-.shortcut-hints > span { display: inline-flex; align-items: center; gap: 7px; }
 kbd { font: 10px 'Inter', Arial, sans-serif; border: 1px solid var(--line); padding: 4px 6px; min-width: 27px; text-align: center; border-radius: 3px; color: #58624f; }
-.game-bottom { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
-.site-footer { display: flex; align-items: center; justify-content: space-between; padding: 24px 0 28px; margin-top: 20px; font-size: 12px; color: var(--muted); }
+.site-footer { display: flex; align-items: center; justify-content: space-between; padding: 24px 0 28px; margin-top: 12px; font-size: 12px; color: var(--muted); }
 .site-footer a { text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
 .site-footer div { display: flex; gap: 26px; align-items: center; }
-.site-footer button { padding: 0; font-size: inherit; color: inherit; }
+.site-footer button { padding: 12px 0; font-size: inherit; color: inherit; }
+
+.site-footer .footer-credit { gap: 16px; }
+#save-status { font-size: 11px; }
 
 /* Touch keyboard */
 .keyboard { padding-top: 20px; user-select: none; }
@@ -149,16 +150,11 @@ kbd { font: 10px 'Inter', Arial, sans-serif; border: 1px solid var(--line); padd
 dialog { width: min(480px, calc(100% - 32px)); max-height: calc(100dvh - 40px); border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); padding: 38px 32px 32px; box-shadow: 0 20px 80px #15231924; overflow-y: auto; }
 dialog::backdrop { background: #17221b70; }
 .dialog-close { position: absolute; right: 10px; top: 10px; color: #70796a; }
-dialog h2 { font-size: 34px; font-weight: 500; letter-spacing: -1.3px; line-height: 1.15; margin: 0 0 16px; }
+dialog h2 { font-size: 28px; font-weight: 500; letter-spacing: -.03em; line-height: 1.15; margin: 0 0 16px; }
 dialog p { font-size: 13px; line-height: 1.7; color: #636e5d; margin: 0 0 16px; }
 .dialog-actions { display: flex; justify-content: center; gap: 10px; margin-top: 28px; }
 .dialog-actions > * { flex: 1; }
-.help-steps { margin: 26px 0; display: grid; gap: 22px; }
-.help-step { display: flex; gap: 14px; align-items: flex-start; }
-.step-number { width: 22px; flex-shrink: 0; padding-top: 1px; font-size: 14px; font-weight: 500; color: var(--green); }
-.help-step strong { font-size: 14px; font-weight: 500; }
-.help-step p { font-size: 12px; margin: 5px 0 0; }
-.shortcuts { border-top: 1px solid var(--line); padding-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 11px; color: var(--muted); }
+.shortcuts { padding-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 11px; color: var(--muted); }
 .shortcut { display: flex; align-items: center; gap: 7px; }
 .setting-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
 .setting-row strong { display: block; font-size: 14px; font-weight: 500; }
@@ -173,14 +169,13 @@ dialog p { font-size: 13px; line-height: 1.7; color: #636e5d; margin: 0 0 16px; 
 .archive-item strong { font-size: 14px; font-weight: 500; }
 .archive-item small { display: block; font-size: 12px; color: var(--muted); margin-top: 5px; }
 .archive-status { font-size: 12px; color: var(--green); }
-.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 32px 0; }
-.stat { text-align: center; border-right: 1px solid var(--line); }
-.stat:last-child { border: 0; }
-.stat strong { display: block; font-size: 34px; font-weight: 450; letter-spacing: -1.5px; }
-.stat span { display: block; font-size: 11px; color: var(--muted); margin-top: 8px; }
-.stats-note { font-size: 12px !important; padding-top: 20px; border-top: 1px solid var(--line); }
+.stats-list { margin: 28px 0; }
+.stats-list > div { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 14px 0; }
+.stats-list dt { font-size: 14px; color: var(--muted); }
+.stats-list dd { margin: 0; font-size: 18px; font-variant-numeric: tabular-nums; }
+.stats-note { font-size: 12px !important; }
 .success-content { text-align: center; padding-top: 12px; }
-.success-time { font-size: 72px; font-weight: 400; letter-spacing: -4px; line-height: 1; margin: 30px 0 12px; font-variant-numeric: tabular-nums; }
+.success-time { font-size: 44px; font-weight: 400; letter-spacing: -.03em; line-height: 1; margin: 30px 0 12px; font-variant-numeric: tabular-nums; }
 .success-label { font-size: 13px; color: var(--muted); }
 .success-content .dialog-actions { flex-direction: column; }
 .text-link { display: flex; align-items: center; gap: 8px; font-size: 13px; }
@@ -192,19 +187,18 @@ dialog p { font-size: 13px; line-height: 1.7; color: #636e5d; margin: 0 0 16px; 
 @media (max-width: 1000px) {
   .site-header { gap: 42px; }
   .intro { gap: 16px; }
-  h1 { font-size: 52px; letter-spacing: -2.8px; }
+  h1 { font-size: 32px; }
   .game-content { grid-template-columns: 350px minmax(0, 1fr); gap: 30px; }
   .clues-panel { column-gap: 14px; }
   .clue-button { font-size: 13px; padding: 12px 8px; }
   .clue-section h3 { padding-left: 8px; }
-  .shortcut-hints { gap: 10px; font-size: 10px; padding-left: 8px; }
   .puzzle-heading h2 { font-size: 12px; }
 }
 
 @media (min-width: 701px) and (max-height: 820px) {
   .site-header { height: 64px; }
   .intro { padding: 26px 0 24px; }
-  h1 { font-size: 52px; }
+  h1 { font-size: 32px; }
   .game-content { grid-template-columns: 340px minmax(0, 1fr); gap: 48px; padding-top: 20px; }
   .active-clue { min-height: 55px; margin-bottom: 12px; }
   .clue-button { padding-top: 10px; padding-bottom: 10px; min-height: 48px; }
@@ -213,18 +207,17 @@ dialog p { font-size: 13px; line-height: 1.7; color: #636e5d; margin: 0 0 16px; 
 }
 
 @media (max-width: 700px) {
-  .site-header { height: 64px; padding: 0 20px; gap: 26px; }
-  .brand { font-size: 27px; gap: 7px; letter-spacing: -1.5px; }
+  .site-header { max-width: 490px; height: 64px; padding: 0 20px; gap: 26px; }
+  .brand { font-size: 27px; gap: 7px; letter-spacing: -.04em; }
   .brand img { width: 24px; height: 24px; }
   .main-nav { gap: 18px; }
   .nav-link { font-size: 12px; }
-  .nav-help { display: none; }
   .header-actions { gap: 0; }
-  .header-actions .icon-button { width: 32px; height: 36px; }
+  .header-actions .icon-button { width: 36px; height: 44px; }
   .header-actions svg { width: 18px; height: 18px; }
   .page { max-width: 490px; padding: 0 20px; }
   .intro { display: block; padding: 28px 0 22px; }
-  h1 { font-size: 44px; letter-spacing: -2.5px; }
+  h1 { font-size: 28px; }
   .puzzle-heading { text-align: left; padding: 0; margin-top: 15px; }
   .puzzle-heading h2 { font-size: 13px; margin-bottom: 4px; }
   .puzzle-heading > span { font-size: 11px; }
@@ -236,7 +229,6 @@ dialog p { font-size: 13px; line-height: 1.7; color: #636e5d; margin: 0 0 16px; 
   .timer-group .icon-button { width: 26px; }
   #timer { min-width: 34px; }
   .pencil-button, .reset-button { width: 32px; }
-  .tool-divider { margin: 0 2px; }
   #solved-badge { padding: 6px 8px; font-size: 10px; }
   .game-content { padding: 18px 0 20px; grid-template-columns: 1fr; gap: 28px; }
   .board-column { max-width: 410px; width: 100%; margin: 0 auto; }
@@ -251,12 +243,11 @@ dialog p { font-size: 13px; line-height: 1.7; color: #636e5d; margin: 0 0 16px; 
   .clues-panel { column-gap: 18px; }
   .clue-section h3 { font-size: 17px; padding: 0 7px 13px; }
   .clue-button { min-height: 48px; padding: 11px 7px; font-size: 13px; }
-  .shortcut-hints { display: none; }
-  .game-bottom { font-size: 10px; }
-  .game-bottom .quiet-button { font-size: 11px; }
-  .site-footer { margin-top: 8px; padding: 20px 0 28px; font-size: 11px; }
+  .site-footer { margin-top: 8px; padding: 20px 0 28px; font-size: 12px; align-items: flex-start; }
+  .site-footer .footer-credit { align-items: flex-start; flex-direction: column; gap: 10px; padding-top: 12px; }
+  .site-footer div { gap: 18px; }
   dialog { padding: 36px 24px 26px; }
-  dialog h2 { font-size: 30px; }
+  dialog h2 { font-size: 28px; }
   .shortcuts { gap: 12px; font-size: 10px; }
   .primary-button, .secondary-button { font-size: 13px; }
   .toast { bottom: 20px; }
@@ -266,7 +257,7 @@ dialog p { font-size: 13px; line-height: 1.7; color: #636e5d; margin: 0 0 16px; 
   .site-header { gap: 17px; padding: 0 16px; }
   .main-nav { gap: 12px; }
   .page { padding: 0 16px; }
-  h1 { font-size: 40px; }
+  h1 { font-size: 28px; }
   .game-tools { gap: 1px; }
   .tool-button { padding: 7px; }
 }

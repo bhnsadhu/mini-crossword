@@ -16,7 +16,6 @@
     <nav class="main-nav" aria-label="Main navigation">
       <button class="nav-link active" data-action="today">Today</button>
       <button class="nav-link" data-action="archive">Archive</button>
-      <button class="nav-link nav-help" data-action="help">How to play</button>
     </nav>
     <div class="header-actions">
       <button class="icon-button" data-action="stats" aria-label="Your statistics" title="Your statistics" data-icon="stats"></button>
@@ -32,10 +31,9 @@
 
     <section class="game-card" aria-label="Mini crossword game">
       <div class="toolbar">
-        <div class="timer-group"><span data-icon="clock"></span><span id="timer" aria-label="Elapsed time">0:00</span><button id="pause-button" class="icon-button small" data-action="pause" aria-label="Pause puzzle" data-icon="pause"></button><button id="solved-badge" data-action="results" title="View your result" hidden>Solved ↗</button></div>
+        <div class="timer-group"><span data-icon="clock"></span><span id="timer" aria-label="Elapsed time">0:00</span><button id="pause-button" class="icon-button small" data-action="pause" aria-label="Pause puzzle" data-icon="pause"></button><button id="solved-badge" data-action="results" title="View your result" hidden>View result</button></div>
         <div class="game-tools">
           <button id="pencil-button" class="tool-button pencil-button" data-action="pencil" aria-label="Pencil mode" aria-pressed="false" title="Pencil mode"><span data-icon="pencil"></span></button>
-          <span class="tool-divider"></span>
           <div class="menu-wrap"><button class="tool-button" data-menu="check" aria-expanded="false">Check <span data-icon="chevron-down"></span></button><div id="check-menu" class="tool-menu" hidden><button data-check="square">Check square</button><button data-check="word">Check word</button><button data-check="puzzle">Check puzzle</button><hr><button data-action="autocheck">Autocheck <span id="autocheck-indicator">Off</span></button></div></div>
           <div class="menu-wrap"><button class="tool-button" data-menu="reveal" aria-expanded="false">Reveal <span data-icon="chevron-down"></span></button><div id="reveal-menu" class="tool-menu" hidden><button data-reveal="square">Reveal square</button><button data-reveal="word">Reveal word</button><button data-reveal="puzzle">Reveal puzzle…</button></div></div>
           <button class="tool-button reset-button" data-action="reset" aria-label="Clear puzzle" title="Clear puzzle"><span data-icon="reset"></span></button>
@@ -50,14 +48,13 @@
             <div id="pause-overlay" class="pause-overlay" hidden><h3>Paused</h3><button class="primary-button" data-action="resume"><span data-icon="play"></span> Resume</button></div>
           </div>
           <div class="board-footer"><span id="progress-text">0 of 25 squares</span><button id="keyboard-toggle" class="quiet-button" data-action="keyboard" aria-expanded="false"><span data-icon="keyboard"></span><span>Keyboard</span></button></div>
-          <div id="keyboard" class="keyboard" aria-label="On-screen keyboard" hidden></div>
+          <div id="keyboard" class="keyboard" aria-label="Touch keyboard" hidden></div>
         </div>
-        <div class="clues-panel" id="clues-panel"><section class="clue-section"><h3>Across</h3><ol id="across-clues"></ol></section><section class="clue-section"><h3>Down</h3><ol id="down-clues"></ol></section><div class="shortcut-hints"><span><kbd>Space</kbd> Switch direction</span><span><kbd>Tab</kbd> Next clue</span></div></div>
+        <div class="clues-panel" id="clues-panel"><section class="clue-section"><h3>Across</h3><ol id="across-clues"></ol></section><section class="clue-section"><h3>Down</h3><ol id="down-clues"></ol></section></div>
       </div>
-      <div class="game-bottom"><span id="save-status">Saved on this device</span><button class="quiet-button" data-action="help">How to play <span data-icon="arrow-right"></span></button></div>
     </section>
 
-    <footer class="site-footer"><a href="https://bhanusadhu.com" target="_blank" rel="noopener">By Bhanu</a><div><button data-action="archive">Archive</button><button data-action="privacy">Privacy</button></div></footer>
+    <footer class="site-footer"><div class="footer-credit"><a href="https://bhanusadhu.com" target="_blank" rel="noopener">By Bhanu</a><span id="save-status">Saved on this device</span></div><div><button data-action="help">How to play</button><button data-action="privacy">Privacy</button></div></footer>
   </main>
 
   <dialog id="dialog" aria-labelledby="dialog-title"><button id="dialog-close" class="icon-button dialog-close" aria-label="Close dialog" data-icon="close"></button><div id="dialog-content"></div></dialog>

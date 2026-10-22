@@ -39,7 +39,7 @@ export const PUZZLES = [
         1: 'Competitor you really want to beat',
         2: 'Venue for a basketball game',
         3: 'Compassion shown to someone you could punish',
-        4: 'Three-letter name behind “ideas worth spreading” talks',
+        4: 'Talk series with the slogan “ideas worth spreading”',
         5: 'Change the color of, as fabric',
       },
     },
@@ -117,7 +117,7 @@ export const PUZZLES = [
     grid: ['REF##', 'OWL##', 'TEACH', '##MOO', '##EGG'],
     clues: {
       across: {
-        1: 'Whistle-blowing sports official, for short',
+        1: 'Official who blows a whistle, for short',
         4: 'Bird that might ask “Who?”',
         5: 'Help someone learn a new skill',
         8: 'Sound from a cow',
