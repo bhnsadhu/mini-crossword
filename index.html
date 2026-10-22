@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#faf9f6">
+  <meta name="description" content="A little crossword for your daily pause. Play a free 5×5 mini crossword, save your streak, and come back for another.">
+  <title>Mini — a little daily crossword</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Mini home"><img src="/favicon.svg" alt="" width="30" height="30"><span>mini<span class="brand-dot">.</span></span></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <button class="nav-link active" data-action="today">Daily mini</button>
+      <button class="nav-link" data-action="archive">Archive</button>
+      <button class="nav-link" data-action="help">How to play</button>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button mobile-help" data-action="help" aria-label="How to play" data-icon="help"></button>
+      <button class="icon-button" data-action="stats" aria-label="Your statistics" title="Your statistics" data-icon="stats"></button>
+      <button class="icon-button" data-action="settings" aria-label="Settings" title="Settings" data-icon="settings"></button>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="intro" aria-labelledby="page-title">
+      <div><div class="eyebrow">A LITTLE DAILY RITUAL</div><h1 id="page-title">The daily mini<span>.</span></h1><p>Small grid. Big little victory.</p></div>
+      <div class="daily-badge"><span class="status-dot"></span><span>5 × 5 crossword</span><span class="badge-divider"></span><span>Free to play</span></div>
+    </section>
+
+    <section class="game-card" aria-label="Mini crossword game">
+      <div class="puzzle-heading"><div><h2 id="puzzle-date"></h2><span id="puzzle-subtitle"></span></div><button class="archive-link" data-action="archive"><span data-icon="calendar"></span><span>Past puzzles</span><span data-icon="chevron-right"></span></button></div>
+      <div class="toolbar">
+        <div class="timer-group"><span data-icon="clock"></span><span id="timer" aria-label="Elapsed time">0:00</span><button id="pause-button" class="icon-button small" data-action="pause" aria-label="Pause puzzle" data-icon="pause"></button><span id="solved-badge" hidden>Solved</span></div>
+        <div class="game-tools">
+          <button id="pencil-button" class="tool-button pencil-button" data-action="pencil" aria-label="Pencil mode" aria-pressed="false" title="Pencil mode"><span data-icon="pencil"></span></button>
+          <span class="tool-divider"></span>
+          <div class="menu-wrap"><button class="tool-button" data-menu="check" aria-expanded="false">Check <span data-icon="chevron-down"></span></button><div id="check-menu" class="tool-menu" hidden><button data-check="square">Check square</button><button data-check="word">Check word</button><button data-check="puzzle">Check puzzle</button><hr><button data-action="autocheck">Autocheck <span id="autocheck-indicator">Off</span></button></div></div>
+          <div class="menu-wrap"><button class="tool-button" data-menu="reveal" aria-expanded="false">Reveal <span data-icon="chevron-down"></span></button><div id="reveal-menu" class="tool-menu" hidden><button data-reveal="square">Reveal square</button><button data-reveal="word">Reveal word</button><button data-reveal="puzzle">Reveal puzzle…</button></div></div>
+          <button class="tool-button reset-button" data-action="reset" aria-label="Clear puzzle" title="Clear puzzle"><span data-icon="reset"></span></button>
+        </div>
+      </div>
+
+      <div class="game-content">
+        <div class="board-column">
+          <div class="active-clue"><button class="clue-arrow" data-action="previous" aria-label="Previous clue" data-icon="chevron-left"></button><div id="active-clue" aria-live="polite"></div><button class="clue-arrow" data-action="next" aria-label="Next clue" data-icon="chevron-right"></button></div>
+          <div class="grid-wrap">
+            <div id="grid" class="crossword-grid" role="group" aria-label="Crossword grid. Type letters to fill squares; arrow keys move, space changes direction, Tab changes clue."></div>
+            <div id="pause-overlay" class="pause-overlay" hidden><div class="pause-symbol" data-icon="pause"></div><h3>A little breather.</h3><p>Your puzzle will be right here.</p><button class="primary-button" data-action="resume"><span data-icon="play"></span> Resume puzzle</button></div>
+          </div>
+          <div class="board-footer"><span id="progress-text">0 of 25 squares</span><button id="keyboard-toggle" class="quiet-button" data-action="keyboard" aria-expanded="false"><span data-icon="keyboard"></span><span>Keyboard</span></button></div>
+          <div id="keyboard" class="keyboard" aria-label="On-screen keyboard" hidden></div>
+        </div>
+        <div class="clues-panel" id="clues-panel"><section class="clue-section"><h3>ACROSS <span data-icon="arrow-right"></span></h3><ol id="across-clues"></ol></section><section class="clue-section"><h3>DOWN <span data-icon="arrow-down"></span></h3><ol id="down-clues"></ol></section><div class="clue-tip"><span data-icon="sparkle"></span><p>A fresh perspective helps.<br>Try switching directions.</p></div></div>
+      </div>
+      <div class="game-bottom"><span><span class="saved-dot"></span><span id="save-status">Progress saved on this device</span></span><button class="quiet-button" data-action="help"><span data-icon="help"></span> Playing tips</button></div>
+    </section>
+
+    <div class="below-game"><p><span data-icon="sun"></span> A few clues. A little pause. A day well started.</p><button class="text-link" data-action="archive">Keep puzzling <span data-icon="arrow-right"></span></button></div>
+    <footer class="site-footer"><span>A small game by <a href="https://bhanusadhu.com" target="_blank" rel="noopener">Bhanu</a></span><div><button data-action="help">How to play</button><span>·</span><button data-action="privacy">Privacy</button></div></footer>
+  </main>
+
+  <dialog id="dialog" aria-labelledby="dialog-title"><button id="dialog-close" class="icon-button dialog-close" aria-label="Close dialog" data-icon="close"></button><div id="dialog-content"></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <noscript><p class="noscript">Enable JavaScript to play this crossword. Your progress stays on your device.</p></noscript>
+</body>
+</html>
