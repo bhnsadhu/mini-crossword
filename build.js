@@ -1,6 +1,6 @@
 import { mkdir, copyFile, cp } from 'node:fs/promises';
 await mkdir('dist', { recursive: true });
-for (const file of ['index.html', 'styles.css', 'app.js', 'game.js', 'puzzles.js', 'favicon.svg', 'favicon.ico', 'site.webmanifest']) {
+for (const file of ['index.html', 'styles.css', 'app.js', 'game.js', 'puzzles.js', 'favicon.svg', 'favicon.ico', 'site.webmanifest', 'robots.txt']) {
   await copyFile(file, `dist/${file}`);
 }
 await cp('assets', 'dist/assets', { recursive: true, filter: source => !source.endsWith('.ttf') });
